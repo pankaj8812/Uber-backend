@@ -1,5 +1,5 @@
 const bookingRepository = require('../repositories/bookingRepository');
-const passengerRepository = require('../repositories/passengerRepository')
+const passengerRepository = require('../repositories/passengerRepository');
 
 const getPassengerBookings = async function (passengerID) {
     try {

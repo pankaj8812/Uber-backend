@@ -9,7 +9,24 @@ const getBookings = async function (passengerID) {
     }
     
 }
+const  createUser  =   async function(problemData) {
+    try {
+
+        const user = await User.create({
+            title: problemData.title,
+            description: problemData.description,
+            codeStubs: problemData.codeStubs,
+            testCases: (problemData.testCases) ? problemData.testCases : []
+        });
+
+        return user;
+    } catch(error) {
+        console.log(error);
+        throw error;
+    }
+}
 
 module.exports = {
-    getBookings
+    getBookings,
+    createUser,
 }
