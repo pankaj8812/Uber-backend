@@ -40,6 +40,19 @@ const getUser = async function (id) {
         }
     } 
 
+    const getUserByEmail = async function (data) {
+        try {
+            const user = await User.findOne(data);
+            // if(!user) {
+            //     throw new Error("user", id);
+            // }
+            return user;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    } 
+
 const deleteUser = async function(id) {
         try {
             const deletedUser = await User.findByIdAndDelete(id);
@@ -51,12 +64,14 @@ const deleteUser = async function(id) {
             console.log(error);
             throw error;
         }
-    }
+}
+
 
 
 module.exports = {
     createUser,
     getAllUsers,
     getUser,
+    getUserByEmail,
     deleteUser,
 }

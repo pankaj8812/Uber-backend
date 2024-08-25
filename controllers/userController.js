@@ -10,7 +10,7 @@ async function addUser(req, res, next) {
     try {
         console.log("incoming req body", req.body);
         const newUser = await userService.createUser(req.body);
-        return res.status(StatusCodes.CREATED).json({
+        return res.status(StatusCodes.StatusCodes.CREATED).json({
             success: true,
             message: 'Successfully created a new user',
             error: {},
@@ -21,10 +21,24 @@ async function addUser(req, res, next) {
     }
 }
 
+async function signin(req, res, next) {
+    try {
+        const user = await userService.signin(req.body);
+        return res.status(StatusCodes.StatusCodes.OK).json({
+            success: true,
+            error: {},
+            message: 'Successfully signin a user',
+            data: user
+        })
+    } catch(error) {
+        next(error);
+    }
+}
+
 async function getUser(req, res, next) {
     try {
         const user = await userService.getUser(req.params.id);
-        return res.status(StatusCodes.OK).json({
+        return res.status(StatusCodes.StatusCodes.OK).json({
             success: true,
             error: {},
             message: 'Successfully fetched a user',
@@ -78,7 +92,8 @@ module.exports = {
     getUsers,
     deleteUser,
     updateuser,
-    pinguserController
+    pinguserController,
+    signin,
 }
 
 /**

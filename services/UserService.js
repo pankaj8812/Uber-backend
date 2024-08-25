@@ -1,4 +1,9 @@
 const userRepository = require('../repositories/userRepository');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const createUser =   async function(userData) {
 
@@ -23,10 +28,25 @@ const deleteUser =  async function(userId) {
 }
 
 
+const signin = async function(userData){
+    try {
+        const user =  await userRepository.getUserByEmail({email: userData.email});
+        console.log(userData.password,  user.password);
+        if(!user || !(bcrypt.compare(userData.password, user.password))){
+            throw new error('Invalid email or password');
+        }
+        const token  = jwt.sign({id: user._id}, process.env.JWT_SECERT, {expiresIn: '1h'});
+        return {user,token};
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 module.exports =  {
     createUser,
     getAllUsers,
     getUser,
     deleteUser,
+    signin,
 };
